@@ -1,0 +1,6 @@
+@Sentinel.Validator.POC_HostAddress = http://localhost:5047
+
+GET {{Sentinel.Validator.POC_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
