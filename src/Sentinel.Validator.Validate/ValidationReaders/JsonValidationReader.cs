@@ -39,7 +39,7 @@ public class JsonValidationReader : IValidationReader
 
 
 
-    public IDictionary<string, ValidationModel> Read(string Location)
+    private IDictionary<string, ValidationModel> Read(string Location)
     {
 
         IDictionary<string, ValidationModel> validations = new Dictionary<string, ValidationModel>();

@@ -51,7 +51,7 @@ namespace Sentinel.Validator.Validate.Tests
             var reader = new JsonValidationReader(options);
 
             // Act
-            var result = reader.Read("./jsonreaders/validation.json");
+            var result = reader.Read();
 
             // Assert
             Assert.NotNull(result);
@@ -69,7 +69,7 @@ namespace Sentinel.Validator.Validate.Tests
             var reader = new JsonValidationReader(options);
 
             // Act
-            var result = reader.Read("path/to/invalid/file.json");
+            var result = reader.Read();
 
             // Assert
             Assert.NotNull(result);
@@ -89,7 +89,7 @@ namespace Sentinel.Validator.Validate.Tests
             var reader = new JsonValidationReader(options);
 
             // Act
-            var result = reader.Read("./jsonreaders/validation.json");
+            var result = reader.Read();
 
             // Assert
             Assert.NotNull(result);
@@ -113,7 +113,7 @@ namespace Sentinel.Validator.Validate.Tests
             var reader = new JsonValidationReader(options);
 
             // Act
-            var result = reader.Read("./jsonreaders/empty.json");
+            var result = reader.Read();
 
             // Assert
             Assert.NotNull(result);
@@ -131,7 +131,7 @@ namespace Sentinel.Validator.Validate.Tests
             var reader = new JsonValidationReader(options);
 
             // Act
-            var result = reader.Read("./jsonreaders/invalid.json");
+            var result = reader.Read();
 
             // Assert
             Assert.NotNull(result);
