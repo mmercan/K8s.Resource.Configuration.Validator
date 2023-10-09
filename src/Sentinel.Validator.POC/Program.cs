@@ -18,6 +18,10 @@ builder.Services.AddControllers();
 builder.Services.AddSingleton<IServiceCollection>(builder.Services);
 builder.Services.AddSingleton<IServiceProvider>(builder.Services.BuildServiceProvider());
 builder.Services.AddSingleton<ValidationBackgroundServiceFactory>();
+
+var q = new ValidationBackgroundServiceFactory(builder.Services);
+
+//builder.Services.
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -27,7 +31,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
+// var fac = app.Services.GetService<ValidationBackgroundServiceFactory>();
+//var fac = app.Services.GetService<ValidationBackgroundServiceFactory();
 
 app.MapControllerRoute(
     name: "default",

@@ -2,24 +2,28 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Sentinel.Validator.POC.Repo;
 
 namespace Sentinel.Validator.POC.BackgroundServices;
-public class BGAppService<T> : BackgroundService
+public class BGAppService : BackgroundService
 {
     private readonly IServiceProvider _services;
-    private readonly ILogger<BGAppService<T>> _logger;
+    private readonly ILogger<BGAppService> _logger;
+    private readonly string _k8sType;
+    private readonly ValidationRepo _validationRepo;
 
-    public BGAppService(IServiceProvider services,
-        ILogger<BGAppService<T>> logger)
+    public BGAppService(IServiceProvider services, String k8sType)
     {
         _services = services;
-        _logger = logger;
+        _logger = services.GetService<ILogger<BGAppService>>();
+        _k8sType = k8sType;
+        //  _validationRepo = validationRepo;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        _logger.LogInformation(
-            "Consume Scoped Service Hosted Service running.");
+        _logger.LogInformation(_k8sType +
+            " Consume Scoped Service Hosted Service running.");
 
         await DoWork(stoppingToken);
     }

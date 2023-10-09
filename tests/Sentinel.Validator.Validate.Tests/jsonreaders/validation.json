@@ -1,0 +1,154 @@
+{
+    "Validate": {
+        "V1Namespace": {
+            "K8sResource": {
+                "Group": "",
+                "Plural": "namespaces",
+                "Version": "v1",
+                "KubeKind": "Namespace"
+            },
+            "Schedule": "Watch",
+            "Validations": [
+                {
+                    "Name": "Namespace has rbac-mgr-developers label",
+                    "Description": "",
+                    "jsonPath": "$.Metadata.Labels.rbac-mgr-developers",
+                    "Operator": "!null"
+                },
+                {
+                    "Name": "Namespace has costcentre label",
+                    "Description": "",
+                    "jsonPath": "$.Metadata.Labels.costcentre",
+                    "Operator": "!null"
+                },
+                {
+                    "Name": "Namespace has istio-injection label",
+                    "Description": "",
+                    "jsonPath": "$.Metadata.Labels.istio-injection",
+                    "Operator": "==",
+                    "ExpectedValue": "enabled"
+                }
+            ]
+        },
+        "V1Deployment": {
+            "K8sResource": {
+                "Group": "apps",
+                "Plural": "deployments",
+                "Version": "v1",
+                "KubeKind": "Deployment"
+            },
+            "Schedule": "0 * * * *",
+            "Validations": [
+                {
+                    "Name": "Deployment has at least 1 Replica",
+                    "Description": "",
+                    "jsonPath": "$.Status.Replicas",
+                    "Operator": ">=",
+                    "ExpectedValue": 1,
+                    "ValueDataType": "Int32"
+                },
+                {
+                    "Name": "Deployment doesn't have Unavailable Replicas",
+                    "Description": "",
+                    "jsonPath": "$.Status.UnavailableReplicas",
+                    "Operator": "null"
+                },
+                {
+                    "Name": "Deployment has Resource Limits",
+                    "Description": "",
+                    "jsonPath": "$.Spec.Template.Spec.Containers[?(@.Resources.Limits != null)].Resources.Limits",
+                    "Operator": "!null"
+                }
+            ]
+        },
+        "V1Pod": {
+            "K8sResource": {
+                "Group": "",
+                "Plural": "pods",
+                "Version": "v1",
+                "KubeKind": "Pod"
+            },
+            "Schedule": "Watch",
+            "Validations": [
+                {
+                    "Name": "aadpodidbinding is Added to Pod",
+                    "Description": "",
+                    "jsonPath": "$.Metadata.Labels.aadpodidbinding",
+                    "Operator": "!null"
+                },
+                {
+                    "Name": "All Containers Should be Running",
+                    "Description": "",
+                    "jsonPath": "$.Status.ContainerStatuses[?(@.State.Running== null)].State",
+                    "Operator": "null",
+                    "CaptureJsonPath": "$.Status.ContainerStatuses[?(@.State.Running== null)].State"
+                }
+            ]
+        },
+        "V1Service": {
+            "K8sResource": {
+                "Group": "",
+                "Plural": "services",
+                "Version": "v1",
+                "KubeKind": "Service"
+            },
+            "Schedule": "Watch",
+            "Validations": [
+                {
+                    "Name": "Service Metadata Containers Should be Running",
+                    "Description": "",
+                    "jsonPath": "$.Status.Conditions",
+                    "Operator": "null"
+                }
+            ]
+        },
+        "VirtualService": {
+            "K8sResource": {
+                "Group": "networking.istio.io",
+                "Plural": "virtualservices",
+                "Version": "v1alpha3",
+                "KubeKind": "VirtualService"
+            },
+            "Schedule": "Watch",
+            "Validations": [
+                {
+                    "Name": "Virtual Service hosts is not Empty",
+                    "Description": "",
+                    "jsonPath": "$.spec.hosts",
+                    "Operator": "!null"
+                },
+                {
+                    "Name": "Virtual Service gateways is the Default",
+                    "Description": "",
+                    "jsonPath": "$.spec.gateways",
+                    "Operator": "!null"
+                },
+                {
+                    "Name": "Virtual Service match uri prefix should not be empty",
+                    "Description": "",
+                    "jsonPath": "$.spec.http[?(@.match != null)].match[0].uri.prefix",
+                    "Operator": "!null"
+                }
+            ]
+        },
+        "EnvoyFilter": {
+            "K8sResource": {
+                "Group": "networking.istio.io",
+                "Plural": "envoyfilters",
+                "Version": "v1alpha3",
+                "KubeKind": "EnvoyFilter"
+            },
+            "Schedule": "Watch",
+            "Validations": [
+                {
+                    "Name": "EnvoyFilter Service hosts is not Empty",
+                    "Description": "",
+                    "jsonPath": "spec.configPatches[*].patch.ValueString",
+                    "Operator": "!contains",
+                    "ExpectedValue": "bd4bb8c2d406a1cae684cf045d79e7a0b3afef54ec9258760be2bdcb9918200b",
+                    "CaptureJsonPath": "spec.configPatches[*].patch.ValueString"
+                }
+            ]
+        }
+    }
+}
