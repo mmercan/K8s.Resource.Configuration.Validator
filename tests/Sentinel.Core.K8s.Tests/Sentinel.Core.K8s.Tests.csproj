@@ -29,13 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Sentinel.Validator.Validate\Sentinel.Validator.Validate.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="jsonreaders\*.*">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>  
+    <ProjectReference Include="..\..\src\Sentinel.Core.K8s\Sentinel.Core.K8s.csproj" />
   </ItemGroup>
 
 </Project>

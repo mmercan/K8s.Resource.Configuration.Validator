@@ -8,6 +8,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.Configure<JsonValidationOptions>(
     builder.Configuration.GetSection(JsonValidationOptions.JsonValidationLocation));
 
+builder.Services.AddSingleton<JsonValidationReader>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

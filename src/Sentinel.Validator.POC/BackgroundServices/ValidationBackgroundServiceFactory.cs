@@ -1,5 +1,7 @@
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -26,10 +28,12 @@ namespace Sentinel.Validator.POC.BackgroundServices
             //     Services.AddSingleton(type, service);
             // }
 
-            services.AddHostedService<BGAppService>((sp) => new BGAppService(sp, "Service1"));
+            // dynamic d = new ExpandoObject();
 
-            services.AddHostedService<BGAppService>((sp) => new BGAppService(sp, "PodV1"));
-
+            // services.AddHostedService<BGAppService>((sp) => new BGAppService(sp, "Service1"));
+            // services.AddHostedService<BGAppService>((sp) => new BGAppService(sp, "PodV1"));
+            services.AddSingleton<IHostedService>((sp) => new BGAppService(sp, "Service1"));
+            services.AddSingleton<IHostedService>((sp) => new BGAppService(sp, "PodV1"));
 
         }
 

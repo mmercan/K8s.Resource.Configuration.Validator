@@ -1,6 +1,7 @@
 using Sentinel.Validator.POC.BackgroundServices;
 using Sentinel.Validator.POC.Repo;
 using Sentinel.Validator.POC.ValidationReaders;
+using Sentinel.Core.K8s.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,10 @@ builder.Services.AddControllers();
 builder.Services.AddSingleton<IServiceCollection>(builder.Services);
 builder.Services.AddSingleton<IServiceProvider>(builder.Services.BuildServiceProvider());
 builder.Services.AddSingleton<ValidationBackgroundServiceFactory>();
+
+builder.Services.AddCoreK8s(builder.Configuration);
+
+builder.Services.AddHostedService<K8NonGenericWatcher>();
 
 var q = new ValidationBackgroundServiceFactory(builder.Services);
 
